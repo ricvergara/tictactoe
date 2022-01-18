@@ -1,7 +1,7 @@
 const boxes = Array.from(document.getElementsByClassName('box'));
 const playText = document.getElementById('playText');
-const restarBtn = document.getElementById('restartGame')
-const spaces = [];
+const restartBtn = document.getElementById('restartBtn')
+const spaces = [null, null, null, null, null, null, null, null, null];
 const O_TEXT = 'O';
 const X_TEXT = 'X';
 
@@ -84,19 +84,17 @@ const playerHasWon = () => {
     }
 }
 
-const restar = () => {
-    spaces.forEach((spaces, index) => {
+restartBtn.addEventListener("click", () => {
+    spaces.forEach((space, index) => {
         spaces[index] = null;
     });
-    boxes.forEach((box) =>{
+    boxes.forEach((box) => {
         box.innerText = '';
     });
     playText.innerText = "Let's play";
     currentPlayer = O_TEXT;
+});
 
-}
-restarBtn.addEventListener("click", restar);
-restar();
 drawBoard();
 
 
