@@ -1,6 +1,10 @@
 const boxes = Array.from(document.getElementsByClassName('box'));
 const playText = document.getElementById('playText');
 const winner = document.getElementById('winner');
+//modal
+var modal = document.getElementById("showModal");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
 const restartBtn = document.getElementById('restartBtn')
 const spaces = [null, null, null, null, null, null, null, null, null];
 const O_TEXT = 'O';
@@ -39,46 +43,38 @@ const restar = () => {
     currentPlayer = O_TEXT;
 }
 
+// When the user clicks the button, open the modal 
+const showWinner = function() {
+    modal.style.display = "block";
+    winner.innerText = `${currentPlayer} has won :D`;
+    restar();
+  }
+  
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  
 const boxClicked = (e) => {
     const id = e.target.id;
     if (!spaces[id]) {
         spaces[id] = currentPlayer;
         e.target.innerText = currentPlayer;
         if (playerHasWon()) {
-            playText.innerText = `${currentPlayer} has won :D`;
+            playText.innerText = `Let's play`;
             return;
         }
 
         currentPlayer = currentPlayer === O_TEXT ? X_TEXT : O_TEXT;
     }
 }
-
-//modal
-        
-var modal = document.getElementById("showModal");
-        
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-const showWinner = function() {
-  modal.style.display = "block";
-  winner.innerText = `${currentPlayer} has won :D`;
-  restar();
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
 
 const playerHasWon = () => {
     if (spaces[0] === currentPlayer) {
